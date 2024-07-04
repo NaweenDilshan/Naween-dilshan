@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import LaptopImg from "../../assets/44444.png";
+import LaptopImg from "../../assets/123.jpeg";
 import Tilt from "react-parallax-tilt";
 import {
   AiFillGithub,
@@ -20,27 +20,27 @@ const About = () => {
                   LET ME <span className="yellow"> INTRODUCE </span> MYSELF
                 </h1>
                 <p className="home-about-body">
-                 Hi, my name is <span className="yellow">K.H Naween Dilshan Dharmapala </span>
+                 Hi, my name is <span className="yellow">K.H Naween Dilshan </span>
                  and I'm from <span className="yellow"> Matara, Sri Lanka.</span>
                 <br />
                 <br />
-                A fourth-year undergraduate student at Sri Lanka Institute of
-Information Technology (SLIIT) reading for BSc Hons Degree in
-Information Technology specializing in Software Engineering.
+                 Graduate Software Engineer at Sri Lanka Institute of
+Information Technology (SLIIT) (BSc Hons Degree in
+Information Technology specializing in Software Engineering).
                 <br />
                 <br />
                   As a
-                  <b className="yellow"> Full-Stack </b>developer,  
+                  <b className="yellow"> Back-End </b>developer,  
                   I enjoy tackling new challenges and continuously expanding my skillset.
                   <br />
                   <br />I am proficient in
-                    <b className="yellow"> Javascript, </b>
+                    <b className="yellow"> Java </b>
                     as well as have knowledge in programming languages such as  Java/spring ... and stacks Springboot projects
                   
                   <br />
                   <br />
                   I have a passion for working
-                  with <b className="yellow">Node.js, MongoDB,</b> and
+                  with <b className="yellow">JS/Node.js, MongoDB</b> and
                   <i>
                     <b className="yellow">
                       {" "}
@@ -49,16 +49,16 @@ Information Technology specializing in Software Engineering.
                   </i>
                   &nbsp; like
                   <i>
-                    <b className="yellow"> React.js</b>
+                    <b className="yellow"> ReactJs/TypeScript</b>
                   </i>
                   <br />
                   <br />
-                  I am also interested in building new
+                  I am 
                   <i>
-                    <b className="yellow"> Web Technologies and Products, </b>
-                    as well as exploring areas related to
-                    <b className="yellow"> Artificial Intelligence.</b>
-                  </i>
+                    <b className="yellow"> the founder of a company, </b>
+                    specializing in developing IT solutions. You can learn more about our work here.
+                    
+                  </i> 
                   <br />
                   
                 </p>
@@ -111,7 +111,7 @@ Information Technology specializing in Software Engineering.
                   </li>
                   <li className="social-icons">
                     <a
-                      href="https://www.linkedin.com/in/naween-dilshan-15045120b"
+                      href="https://www.facebook.com/profile.php?id=100009886727829"
                       target="_blank"
                       rel="noreferrer"
                       className="icon-colour home-social-icons"

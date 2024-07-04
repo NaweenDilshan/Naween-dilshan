@@ -13,7 +13,7 @@ const Resume = () => {
         <Row style={{ justifyContent: "center", position: "relative" }}>
           <Button
             variant="primary"
-            href="https://raw.githubusercontent.com/it20207540/portfolio_Naween_Live/master/src/assets/cv.pdf" // Updated URL
+            href="https://github.com/it20207540/Naween-dilshan/raw/main/src/assets/cv.pdf" // Updated URL to raw file
             target="_blank"
             style={{ maxWidth: "250px" }}
           >
