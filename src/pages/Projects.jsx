@@ -9,6 +9,13 @@ import krypto from "../assets/projects/krypto.png";
 import kickstart from "../assets/projects/kickstart.webp";
 import pg1 from "../assets/projects/metrologo.png";
 
+import k1 from "../assets/koratuwa/koratu1.png"
+import k2 from "../assets/koratuwa/koratu2.png"
+import k3 from "../assets/koratuwa/koratu3.png"
+
+import { Carousel } from "react-bootstrap";
+
+
 const Projects = () => {
   return (
     <Container fluid className="project-section">
@@ -20,6 +27,20 @@ const Projects = () => {
         <p style={{ color: "white" }}>
           Here are a few projects I've worked on recently.
         </p>
+
+        <Row className="text-center">
+          <Col>
+            <h2 className="yellow">7</h2>
+            <p style={{ color: "white" }}>Projects Completed</p>
+          </Col>
+          <Col>
+            <h2 className="yellow">3</h2>
+            <p style={{ color: "white" }}>Individual Projects Done</p>
+          </Col>
+        </Row>
+
+
+
         <Row style={{ justifyContent: "center", paddingBottom: "10px" }}>
           
 
@@ -63,6 +84,13 @@ const Projects = () => {
             />
           </Col>
 
+          <Col md={4} className="project-card">
+          <ProjectCard
+            carouselImages={[k1, k2, k3]} // Pass images for the carousel
+            title="Store Management System - Koratuwa Ceylon Production (Pvt) Ltd"
+            description="Independently developed and successfully hosted a comprehensive web application for Koratuwa Ceylon Production PVT. Managed both backend and frontend development, ensuring a seamless and user-friendly interface. The application streamlined business operations, demonstrating strong skills in full-stack development and creative problem-solving. (SpringBoot, ReactJs, SQL, Hostinger)"
+          />
+        </Col>
          
         </Row>
       </Container>
