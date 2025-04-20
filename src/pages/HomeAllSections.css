@@ -1,0 +1,169 @@
+.all-sections-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-full-height {
+  min-height: 100vh;
+  position: relative;
+  padding: 3rem 0;
+}
+
+.section-title-container {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-top: 4rem;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--blue-700), var(--blue-500));
+  margin: 0.8rem auto 0;
+  border-radius: 4px;
+}
+
+/* Section navigation dots */
+.section-dots {
+  position: fixed;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 10;
+}
+
+.section-dot-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.section-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.section-dot.active {
+  background-color: var(--blue-500);
+  transform: scale(1.2);
+  box-shadow: 0 0 10px rgba(0, 180, 216, 0.5);
+}
+
+.section-dot-tooltip {
+  position: absolute;
+  right: 30px;
+  background-color: var(--blue-700);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.section-dot-container:hover .section-dot-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Adjust content for each section */
+#skills-section,
+#projects-section,
+#resume-section,
+#contact-section {
+  padding-top: 4rem;
+}
+
+/* Button styling for navbar */
+.nav-link[as="button"] {
+  background: transparent;
+  border: none;
+  padding: 0.8rem 1rem !important;
+  cursor: pointer;
+  color: white !important;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: left;
+  width: 100%;
+}
+
+.nav-link[as="button"]:focus {
+  outline: none;
+}
+
+.nav-link[as="button"] .nav-link-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Prevent Particle component from appearing multiple times */
+.all-sections-container .tsparticles-canvas-el:not(:first-child) {
+  display: none !important;
+}
+
+/* Fix for section overlapping and proper spacing */
+#skills-section, #projects-section, #resume-section, #contact-section {
+  padding-top: 80px;
+  margin-top: 40px;
+}
+
+/* Clean up styles for sections within the all-sections-container */
+.all-sections-container .project-section,
+.all-sections-container .about-section,
+.all-sections-container .resume-section,
+.all-sections-container .contact-page {
+  min-height: auto;
+  padding: 20px 0;
+  background: none;
+}
+
+/* Hide background elements that would be duplicated */
+.all-sections-container .particle-component,
+.all-sections-container .project-section > .background-gradient,
+.all-sections-container .project-section > #tsparticles,
+.all-sections-container .about-section > #tsparticles,
+.all-sections-container .resume-section > #tsparticles,
+.all-sections-container .contact-page > #tsparticles {
+  display: none !important;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .section-full-height {
+    min-height: auto;
+    padding: 2rem 0;
+  }
+  
+  .section-dots {
+    right: 15px;
+  }
+  
+  .section-dot-tooltip {
+    display: none;
+  }
+} 

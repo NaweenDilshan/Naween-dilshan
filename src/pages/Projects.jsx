@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import ProjectCard from "../components/Projects/ProjectCard";
 import Particle from "../components/Particle";
@@ -20,11 +20,36 @@ const Projects = () => {
   const [activeTab, setActiveTab] = useState("industrial");
   const [isLoaded, setIsLoaded] = useState(false);
   
+  // Refs for scroll-driven animations
+  const headerRef = useRef(null);
+  const tabsRef = useRef(null);
+  const projectsRef = useRef(null);
+  
   // Scroll-based animations
   const { scrollY } = useScroll();
-  const headerOpacity = useTransform(scrollY, [0, 200], [1, 0.5]);
-  const headerScale = useTransform(scrollY, [0, 200], [1, 0.95]);
-  const backgroundY = useTransform(scrollY, [0, 1000], [0, -100]);
+  const { scrollYProgress: headerProgress } = useScroll({
+    target: headerRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const { scrollYProgress: tabsProgress } = useScroll({
+    target: tabsRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const { scrollYProgress: projectsProgress } = useScroll({
+    target: projectsRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const headerOpacity = useTransform(headerProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0.5]);
+  const headerY = useTransform(headerProgress, [0, 0.2, 0.8, 1], [50, 0, 0, -50]);
+  
+  const tabsOpacity = useTransform(tabsProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0.7]);
+  const tabsScale = useTransform(tabsProgress, [0, 0.2, 0.8, 1], [0.9, 1, 1, 0.95]);
+  
+  const projectsOpacity = useTransform(projectsProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
+  const projectsY = useTransform(projectsProgress, [0, 0.1, 0.9, 1], [100, 0, 0, 100]);
   
   useEffect(() => {
     setIsLoaded(true);
@@ -53,47 +78,10 @@ const Projects = () => {
       tags: ["Spring Boot", "SAP Integration", "Microservices", "REST API", "Java", "PostgreSQL", "Docker"],
       demoLink: "https://metropolitan.lk"
     },
+    
+    
     {
-      id: 2,
-      carouselImages: [k1, k2, k3],
-      title: "Store Management System",
-      subtitle: "Koratuwa Ceylon Production (Pvt) Ltd",
-      description: "Full-stack web application streamlining inventory and business operations. Managed frontend and backend development for a comprehensive solution.",
-      fullDescription: "The Store Management System for Koratuwa Ceylon Production (Pvt) Ltd is a custom-built full-stack application that revolutionized their business operations. Working independently, I designed and implemented both frontend and backend components to create a seamless solution for inventory tracking, sales management, and business analytics. The system successfully reduced manual workflow by 60% and increased operational efficiency by integrating previously disconnected systems.",
-      features: [
-        "Real-time inventory tracking and management",
-        "Advanced sales analytics and reporting",
-        "Customer relationship management (CRM)",
-        "Automated purchase order generation",
-        "Multi-user access with role-based permissions",
-        "Responsive design for desktop and mobile devices"
-      ],
-      tags: ["Spring Boot", "React.js", "SQL", "Hostinger", "Redux", "Material-UI", "RESTful API"],
-      demoLink: "https://koratuwa.com"
-    }
-  ];
-  
-  const individualProjects = [
-    {
-      id: 1,
-      imgPath: project,
-      title: "CMS Financial Web Application",
-      subtitle: "LakMobile Solutions (PVT) LTD",
-      description: "Sophisticated financial management system with Spring Boot backend and React frontend. Implemented secure authentication and data processing features.",
-      fullDescription: "The CMS Financial Web Application is a comprehensive financial management system I developed during my internship at LakMobile Solutions. This project involved creating a secure, scalable platform that handles financial transactions, reporting, and user management. The application features strong authentication mechanisms, encrypted data storage, and real-time analytics to provide actionable insights for financial decision-making.",
-      features: [
-        "OAuth2 and JWT-based authentication system",
-        "Real-time financial data processing",
-        "Comprehensive reporting and analytics dashboard",
-        "Role-based access control with granular permissions",
-        "Integration with third-party payment gateways",
-        "Automated data backup and recovery procedures"
-      ],
-      tags: ["Java", "Spring Boot", "React", "REST API", "JWT", "MySQL", "Redux"],
-      codeLink: "https://github.com/your-username/cms-financial"
-    },
-    {
-      id: 2,
+      id: 3,
       imgPath: kickstart,
       title: "SLT-Mobitel C-Panel Project",
       subtitle: "LakMobile Solutions (PVT) LTD",
@@ -111,7 +99,7 @@ const Projects = () => {
       demoLink: "https://slt.lk/cpanel-demo"
     },
     {
-      id: 3,
+      id: 4,
       imgPath: pg,
       title: "SLT-Mobitel Enterprise Project",
       subtitle: "LakMobile Solutions (PVT) LTD",
@@ -127,49 +115,32 @@ const Projects = () => {
       ],
       tags: ["Java", "Spring Boot", "Enterprise Architecture", "System Integration", "Microservices", "Oracle DB", "Docker"],
       codeLink: "https://github.com/your-username/slt-enterprise-project"
-    }
+    },
   ];
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3
-      }
-    }
-  };
-
-  const cardContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const headingVariants = {
-    hidden: { y: -50, opacity: 0 },
-    visible: { 
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15
-      }
-    }
-  };
-
-  const pageTransition = {
-    type: "tween",
-    ease: "anticipate",
-    duration: 0.5
-  };
+  
+  const individualProjects = [
+    
+    
+    {
+      id: 1,
+      carouselImages: [k1, k2, k3],
+      title: "Store Management System",
+      subtitle: "Koratuwa Ceylon Production (Pvt) Ltd",
+      description: "Full-stack web application streamlining inventory and business operations. Managed frontend and backend development for a comprehensive solution.",
+      fullDescription: "The Store Management System for Koratuwa Ceylon Production (Pvt) Ltd is a custom-built full-stack application that revolutionized their business operations. Working independently, I designed and implemented both frontend and backend components to create a seamless solution for inventory tracking, sales management, and business analytics. The system successfully reduced manual workflow by 60% and increased operational efficiency by integrating previously disconnected systems.",
+      features: [
+        "Real-time inventory tracking and management",
+        "Advanced sales analytics and reporting",
+        "Customer relationship management (CRM)",
+        "Automated purchase order generation",
+        "Multi-user access with role-based permissions",
+        "Responsive design for desktop and mobile devices"
+      ],
+      tags: ["Spring Boot", "React.js", "SQL", "Hostinger", "Redux", "Material-UI", "RESTful API"],
+      demoLink: "https://koratuwa.com"
+    },
+    
+  ];
 
   return (
     <motion.div 
@@ -183,14 +154,29 @@ const Projects = () => {
         <BackgroundAnimation />
         <Particle />
         <Container className="responsive-container">
-          <h1 className="project-heading">
-            My Recent <strong className="purple">Works </strong>
-          </h1>
-          <p className="project-description">
-            Here are a few projects I've worked on recently.
-          </p>
+          <motion.div 
+            ref={headerRef}
+            style={{ 
+              opacity: headerOpacity,
+              y: headerY
+            }}
+          >
+            <h1 className="project-heading">
+              My Recent <strong className="purple">Works </strong>
+            </h1>
+            <p className="project-description">
+              Here are a few projects I've worked on recently.
+            </p>
+          </motion.div>
           
-          <div className="project-tabs">
+          <motion.div 
+            ref={tabsRef} 
+            className="project-tabs"
+            style={{
+              opacity: tabsOpacity,
+              scale: tabsScale
+            }}
+          >
             <button
               className={`project-tab ${activeTab === 'industrial' ? 'active' : ''}`}
               onClick={() => handleTabChange('industrial')}
@@ -203,85 +189,93 @@ const Projects = () => {
             >
               Personal Projects
             </button>
-          </div>
+          </motion.div>
           
           <h2 className="project-category-heading">
             <strong className="purple">{activeTab}</strong> Projects
           </h2>
           
-          <Row className="project-card-row">
-            {activeTab === 'industrial' ? (
-              industrialProjects.map((project, index) => (
-                <Col 
-                  key={project.id} 
-                  md={6} 
-                  className="project-card-col"
-                  xs={12} 
-                  sm={12} 
-                >
-                  <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ 
-                      duration: 0.5, 
-                      delay: index * 0.2 + 0.3,
-                      type: "spring",
-                      damping: 12
-                    }}
+          <motion.div
+            ref={projectsRef}
+            style={{
+              opacity: projectsOpacity,
+              y: projectsY
+            }}
+          >
+            <Row className="project-card-row">
+              {activeTab === 'industrial' ? (
+                industrialProjects.map((project, index) => (
+                  <Col 
+                    key={project.id} 
+                    md={6} 
+                    className="project-card-col"
+                    xs={12} 
+                    sm={12} 
                   >
-                    <ProjectCard
-                      imgPath={project.imgPath}
-                      carouselImages={project.carouselImages}
-                      isBlog={false}
-                      title={project.title}
-                      subtitle={project.subtitle}
-                      description={project.description}
-                      fullDescription={project.fullDescription}
-                      features={project.features}
-                      tags={project.tags}
-                      demoLink={project.demoLink}
-                      codeLink={project.codeLink}
-                    />
-                  </motion.div>
-                </Col>
-              ))
-            ) : (
-              individualProjects.map((project, index) => (
-                <Col 
-                  key={project.id} 
-                  md={6} 
-                  className="project-card-col"
-                  xs={12} 
-                  sm={12} 
-                >
-                  <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ 
-                      duration: 0.5, 
-                      delay: index * 0.15 + 0.3,
-                      type: "spring",
-                      damping: 12
-                    }}
+                    <motion.div
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ 
+                        duration: 0.5, 
+                        delay: index * 0.2 + 0.3,
+                        type: "spring",
+                        damping: 12
+                      }}
+                    >
+                      <ProjectCard
+                        imgPath={project.imgPath}
+                        carouselImages={project.carouselImages}
+                        isBlog={false}
+                        title={project.title}
+                        subtitle={project.subtitle}
+                        description={project.description}
+                        fullDescription={project.fullDescription}
+                        features={project.features}
+                        tags={project.tags}
+                        demoLink={project.demoLink}
+                        codeLink={project.codeLink}
+                      />
+                    </motion.div>
+                  </Col>
+                ))
+              ) : (
+                individualProjects.map((project, index) => (
+                  <Col 
+                    key={project.id} 
+                    md={6} 
+                    className="project-card-col"
+                    xs={12} 
+                    sm={12} 
                   >
-                    <ProjectCard
-                      imgPath={project.imgPath}
-                      carouselImages={project.carouselImages}
-                      isBlog={false}
-                      title={project.title}
-                      subtitle={project.subtitle}
-                      description={project.description}
-                      fullDescription={project.fullDescription}
-                      features={project.features}
-                      tags={project.tags}
-                      demoLink={project.demoLink}
-                      codeLink={project.codeLink}
-                    />
-                  </motion.div>
-                </Col>
-              ))
-            )}
-          </Row>
+                    <motion.div
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ 
+                        duration: 0.5, 
+                        delay: index * 0.15 + 0.3,
+                        type: "spring",
+                        damping: 12
+                      }}
+                    >
+                      <ProjectCard
+                        imgPath={project.imgPath}
+                        carouselImages={project.carouselImages}
+                        isBlog={false}
+                        title={project.title}
+                        subtitle={project.subtitle}
+                        description={project.description}
+                        fullDescription={project.fullDescription}
+                        features={project.features}
+                        tags={project.tags}
+                        demoLink={project.demoLink}
+                        codeLink={project.codeLink}
+                      />
+                    </motion.div>
+                  </Col>
+                ))
+              )}
+            </Row>
+          </motion.div>
         </Container>
       </Container>
     </motion.div>

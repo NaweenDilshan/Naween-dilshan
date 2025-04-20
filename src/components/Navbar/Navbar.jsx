@@ -18,6 +18,9 @@ function NavBar() {
   const [navColour, updateNavbar] = useState(false);
   const location = useLocation();
   
+  // Check if we're on the home page (with all sections)
+  const isHomePage = location.pathname === "/";
+  
   // Check if we're on the contact page
   const isContactPage = location.pathname === "/contact";
 
@@ -69,6 +72,42 @@ function NavBar() {
     })
   };
 
+  // Function to scroll to a section when on home page
+  const scrollToSection = (sectionId) => {
+    if (!isHomePage) return;
+    
+    updateExpanded(false);
+    
+    const sectionMap = {
+      "/": "home-section",
+      "/skillset": "skills-section",
+      "/project": "projects-section",
+      "/resume": "resume-section",
+      "/contact": "contact-section"
+    };
+    
+    const targetSection = document.getElementById(sectionMap[sectionId]);
+    
+    if (targetSection) {
+      if (window.lenis) {
+        window.lenis.scrollTo(targetSection, {
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        });
+      } else {
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+  const navLinks = [
+    { path: "/", name: "Home", icon: <AiOutlineHome /> },
+    { path: "/skillset", name: "Skillset", icon: <GiSkills /> },
+    { path: "/project", name: "Projects", icon: <AiOutlineFundProjectionScreen /> },
+    { path: "/resume", name: "Resume", icon: <CgFileDocument /> },
+    { path: "/contact", name: "Contact", icon: <AiOutlineContacts /> }
+  ];
+
   return (
     <motion.div
       initial="hidden"
@@ -107,13 +146,7 @@ function NavBar() {
           
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ms-auto" defaultActiveKey="#home">
-              {[
-                { path: "/", name: "Home", icon: <AiOutlineHome /> },
-                { path: "/skillset", name: "Skillset", icon: <GiSkills /> },
-                { path: "/project", name: "Projects", icon: <AiOutlineFundProjectionScreen /> },
-                { path: "/resume", name: "Resume", icon: <CgFileDocument /> },
-                { path: "/contact", name: "Contact", icon: <AiOutlineContacts /> }
-              ].map((link, index) => (
+              {navLinks.map((link, index) => (
                 <motion.div
                   key={index}
                   custom={index}
@@ -121,21 +154,38 @@ function NavBar() {
                   className="nav-item-container"
                 >
                   <Nav.Item>
-                    <Nav.Link
-                      as={Link}
-                      to={link.path}
-                      onClick={() => updateExpanded(false)}
-                      className={location.pathname === link.path ? "active-navlink" : ""}
-                    >
-                      <motion.div
-                        className="nav-link-content"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
+                    {isHomePage ? (
+                      <Nav.Link
+                        as="button"
+                        onClick={() => scrollToSection(link.path)}
+                        className={location.pathname === link.path ? "active-navlink" : ""}
                       >
-                        {link.icon}
-                        <span>{link.name}</span>
-                      </motion.div>
-                    </Nav.Link>
+                        <motion.div
+                          className="nav-link-content"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          {link.icon}
+                          <span>{link.name}</span>
+                        </motion.div>
+                      </Nav.Link>
+                    ) : (
+                      <Nav.Link
+                        as={Link}
+                        to={link.path}
+                        onClick={() => updateExpanded(false)}
+                        className={location.pathname === link.path ? "active-navlink" : ""}
+                      >
+                        <motion.div
+                          className="nav-link-content"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          {link.icon}
+                          <span>{link.name}</span>
+                        </motion.div>
+                      </Nav.Link>
+                    )}
                   </Nav.Item>
                 </motion.div>
               ))}

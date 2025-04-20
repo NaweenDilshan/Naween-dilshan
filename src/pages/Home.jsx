@@ -1,13 +1,42 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Container, Row, Col } from "react-bootstrap";
+import { Link, useLocation } from "react-router-dom";
 //import homeLogo from '../assets/about.png'
 import Particle from '../components/Particle';
 import About from '../components/Home/About';
 import Type from '../components/Home/Type';
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { FaCode, FaLaptopCode, FaServer, FaDatabase } from 'react-icons/fa';
 
 const Home = () => {
+  const location = useLocation();
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const y = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [100, 0, 0, -100]);
+  const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8]);
+
+  const scrollToProjects = () => {
+    // If we're on the home page with all sections
+    if (location.pathname === '/') {
+      const projectsSection = document.getElementById('projects-section');
+      if (projectsSection) {
+        if (window.lenis) {
+          window.lenis.scrollTo(projectsSection, {
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+          });
+        } else {
+          projectsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
+  };
+
   return (
     <>
     <section>
@@ -50,9 +79,15 @@ const Home = () => {
                   <a href="#about" className="primary-btn">
                     About Me
                   </a>
-                  <a href="#projects" className="secondary-btn">
-                    View Projects
-                  </a>
+                  {location.pathname === '/' ? (
+                    <button onClick={scrollToProjects} className="secondary-btn">
+                      View Projects
+                    </button>
+                  ) : (
+                    <Link to="/project" className="secondary-btn">
+                      View Projects
+                    </Link>
+                  )}
                 </motion.div>
               </motion.div>
             </Col>
@@ -140,8 +175,16 @@ const Home = () => {
           </Row>
         </Container>
       </Container>
-      <About />
-      
+      <motion.div
+        ref={sectionRef}
+        style={{
+          opacity,
+          y,
+          scale
+        }}
+      >
+        <About />
+      </motion.div>
     </section>
     </>
   );
